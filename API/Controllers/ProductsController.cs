@@ -18,13 +18,21 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
+      private readonly IGenericRepository<ProductBrand> _productBrandRepo;
+        private readonly IGenericRepository<ProductType> _productTypeRepo;
         private readonly IGenericRepository<Product> _productsRepo;
         private readonly IMapper _mapper;
 
-        public ProductsController(IGenericRepository<Product> repo, IMapper mapper)
+        public ProductsController(
+            IGenericRepository<Product> productsRepo,
+            IGenericRepository<ProductType> productTypeRepo,
+            IGenericRepository<ProductBrand> productBrandRepo,
+            IMapper mapper)
         {
-            _productsRepo = repo;
             _mapper = mapper;
+            _productsRepo = productsRepo;
+            _productTypeRepo = productTypeRepo;
+            _productBrandRepo = productBrandRepo;
         }
 
       
@@ -56,6 +64,20 @@ namespace API.Controllers
             if (product == null)return NotFound(new ApiResponse(404)) ;
         
             return _mapper.Map<Product, ProductToReturnDto>(product);
+        }
+
+        
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetBrands()
+        {
+            return Ok(await _productBrandRepo.ListAllAsync());
+        }
+
+       
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetTypes()
+        {
+            return Ok(await _productTypeRepo.ListAllAsync());
         }
     }
 
