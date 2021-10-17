@@ -1,5 +1,6 @@
 using System.Linq;
 using API.Errors;
+using API.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 
@@ -15,7 +16,10 @@ namespace API.Extensions
        
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
-
+            services.AddAutoMapper(typeof(MappingProfiles));
+            
+            services.AddControllers();
+            // services.AddControllers(); must be above beacaus  we will change behaviour of controllers =>> [ApiController]
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = actionContext =>

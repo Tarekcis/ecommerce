@@ -25,11 +25,9 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices();
-
-            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(s => s.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -51,7 +49,7 @@ namespace API
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwaggerDocumentation();
-
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseHttpsRedirection();
 
             app.UseRouting();
