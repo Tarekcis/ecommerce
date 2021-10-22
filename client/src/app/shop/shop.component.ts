@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IBrand } from '../models/brands';
-import { IPagination } from '../models/pagination';
-import { IProduct } from '../models/product';
-import { IType } from '../models/productTypes';
-import { ShopParams } from '../models/shopParams';
+import { IBrand } from '../shared/models/brands';
+import { IPagination } from '../shared/models/pagination';
+import { IProduct } from '../shared/models/product';
+import { IType } from '../shared/models/productTypes';
+import { ShopParams } from '../shared/models/shopParams';
 import { ShopService } from './shop.service';
 
 @Component({
